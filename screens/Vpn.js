@@ -3,13 +3,14 @@ import {
   Animated,
   Dimensions,
   Image,
-  StyleSheet,
   ScrollView,
   TouchableOpacity,
   Text,
   View,
 } from "react-native";
-import {useNavigation} from '@react-navigation/native'
+import {useNavigation} from '@react-navigation/native';
+import globalStyles from '../styles/global';
+const { vpnStyles } = globalStyles;
 const { width } = Dimensions.get("window");
 const BASE_UNIT = 8;
 
@@ -41,7 +42,7 @@ const Dots = ({ scrollX }) => {
   const dotPosition = Animated.divide(scrollX, width);
 
   return (
-    <View style={styles.dotWrapper}>
+    <View style={vpnStyles.dotWrapper}>
       {slides.map((item, index) => {
         const opacity = dotPosition.interpolate({
           inputRange: [index - 1, index, index + 1],
@@ -49,7 +50,7 @@ const Dots = ({ scrollX }) => {
           extrapolate: "clamp",
         });
 
-        return <Animated.View key={`dot-${index}`} style={[styles.dot, { opacity }]} />;
+        return <Animated.View key={`dot-${index}`} style={[vpnStyles.dot, { opacity }]} />;
       })}
     </View>
   );
@@ -60,8 +61,8 @@ const SlideTexts = ({ slideIndex }) => {
 
   return (
     <>
-      <Animated.Text style={styles.title}>{slide && slide.title}</Animated.Text>
-      <Animated.Text style={styles.description}>{slide && slide.description}</Animated.Text>
+      <Animated.Text style={vpnStyles.title}>{slide && slide.title}</Animated.Text>
+      <Animated.Text style={vpnStyles.description}>{slide && slide.description}</Animated.Text>
     </>
   );
 };
@@ -81,8 +82,8 @@ const SlideImages = ({ scrollX }) => {
           useNativeDriver: false,
         })}>
         {slides.map((item, index) => (
-          <View key={`img-${index}`} style={styles.slideWrapper}>
-            <Image source={{ uri: item.img }} resizeMode="contain" style={styles.slideImage} />
+          <View key={`img-${index}`} style={vpnStyles.slideWrapper}>
+            <Image source={{ uri: item.img }} resizeMode="contain" style={vpnStyles.slideImage} />
           </View>
         ))}
       </ScrollView>
@@ -102,14 +103,14 @@ const Vpn = () => {
   });
 
   return (
-    <View style={styles.container}>
+    <View style={vpnStyles.container}>
       <SlideImages scrollX={scrollX} />
-      <View style={styles.bottomWrapper}>
+      <View style={vpnStyles.bottomWrapper}>
         <SlideTexts slideIndex={slideIndex} />
         <Dots scrollX={scrollX} />
-        <Animated.View style={styles.buttonWrapper}>
-          <TouchableOpacity activeOpacity={0.75} style={styles.buttonContainer} onPress={() => {navigator.push('Home')}}>
-            <Text style={styles.buttonTitle}>GET STARTED</Text>
+        <Animated.View style={vpnStyles.buttonWrapper}>
+          <TouchableOpacity activeOpacity={0.75} style={vpnStyles.buttonContainer} onPress={() => {navigator.push('Home')}}>
+            <Text style={vpnStyles.buttonTitle}>GET STARTED</Text>
           </TouchableOpacity>
         </Animated.View>
       </View>
@@ -117,64 +118,6 @@ const Vpn = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  slideWrapper: {
-    width,
-    alignItems: "center",
-  },
-  slideImage: {
-    width: width / 1.5,
-    height: "100%",
-  },
-  title: {
-    textAlign: "center",
-    fontSize: BASE_UNIT * 3,
-    fontWeight: "bold",
-  },
-  description: {
-    textAlign: "justify",
-    fontSize: BASE_UNIT * 2,
-    marginHorizontal: BASE_UNIT * 3,
-    marginVertical: BASE_UNIT * 2,
-  },
-  bottomWrapper: {
-    flex: 1,
-    justifyContent: "flex-end",
-  },
-  buttonTitle: {
-    color: "#FFFFFF",
-    marginHorizontal: BASE_UNIT * 6,
-    marginVertical: BASE_UNIT,
-    fontWeight: "bold",
-  },
-  buttonContainer: {
-    backgroundColor: "#00A9FC",
-    borderRadius: BASE_UNIT * 2,
-  },
-  buttonWrapper: {
-    alignItems: "center",
-    margin: BASE_UNIT * 3,
-  },
-  dotWrapper: {
-    flex: 0,
-    flexDirection: "row",
-    justifyContent: "center",
-    marginVertical: BASE_UNIT,
-  },
-  dot: {
-    flex: 0,
-    width: BASE_UNIT,
-    height: BASE_UNIT,
-    margin: BASE_UNIT / 2,
-    borderRadius: BASE_UNIT,
-    backgroundColor: "gray",
-  },
-});
+
 
 export default Vpn;

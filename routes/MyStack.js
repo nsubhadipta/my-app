@@ -11,24 +11,24 @@ const MyStack = () => {
     return (
         <Stack.Navigator screenOptions={{
             headerStyle: {
-                backgroundColor: '#fff'
+                backgroundColor: 'burlywood'
             },
-            headerTintColor: '#00A9FC',
+            headerTintColor: 'darkslategrey',
             headerTitleStyle: {
                 fontWeight: 'bold'
-            },
+            }
         }}>
 
-            <Stack.Screen name="VPN" component={Vpn} />
-            <Stack.Screen name="Home" component={Home} options={{
+            <Stack.Screen name="VPN" component={Vpn} options={{
                 headerStyle: {
-                    backgroundColor: 'burlywood'
+                    backgroundColor: '#fff'
                 },
-                headerTintColor: 'darkslategrey',
+                headerTintColor: '#00A9FC',
                 headerTitleStyle: {
                     fontWeight: 'bold'
-                }
+                },
             }} />
+            <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Task" component={Task} options={({ route }) => ({ title: route.params.task })} />
             <Stack.Screen name='About' component={About} />
         </Stack.Navigator>
